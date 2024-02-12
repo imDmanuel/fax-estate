@@ -422,6 +422,7 @@ export default async function PropertyListings({
                 <div className="flex items-center space-x-2 mt-1">
                   <FaEnvelope className="text-[#f15a29]" />
                   <div className="text-gray-500">
+                    {/* @ts-expect-error */}
                     {propertyDetails.agent.email}
                   </div>
                 </div>
