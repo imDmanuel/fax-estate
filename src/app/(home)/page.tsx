@@ -17,7 +17,7 @@ export default function Home() {
     <main className="">
       {/* HERO SECTION */}
       <section className="z-10 relative bg-light-blue min-h-[80svh] flex items-center">
-        <div className="container">
+        <div className="container py-10">
           <Image
             className="-z-10 absolute bottom-0 right-0 "
             src={heroImage}
@@ -28,7 +28,7 @@ export default function Home() {
           {/* TAGLINE */}
           <div className="max-w-xl">
             <h1 className="font-merriweather text-secondary">
-              Building houses that feel like home - with us.
+              Building houses that feel like home <br />- with us.
             </h1>
             <p className="pt-4 text-teal-blue">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum

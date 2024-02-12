@@ -233,7 +233,7 @@ export function HeroSearchForm() {
   return (
     <>
       {/* SEARCH FORM */}
-      <div className="mt-16 shadow-2xl shadow-gray-400/45">
+      <div className="mt-5 md:mt-16 shadow-2xl shadow-gray-400/45">
         <div className="bg-white inline-block px-6 py-2">Rentals</div>
         <Form {...form}>
           <form className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr_0.5fr] gap-3 items-center bg-white px-6 py-6">
