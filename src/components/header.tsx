@@ -4,6 +4,7 @@ import Logo from "@/assets/images/logo.png";
 import Link from "next/link";
 import { MenuIcon } from "lucide-react";
 import { routes } from "@/lib/routes";
+import { Button } from "./ui/button";
 
 export function Header() {
   return (
@@ -14,17 +15,16 @@ export function Header() {
         {/* END LOGO */}
 
         {/* NAV MENU */}
-        <nav className="bg-secondary">
-          <ul>
-            <nav className="hidden md:block">
-              <ul className="flex gap-10 text-sm">
-                {routes.map(({ title, href }) => (
-                  <li key={href} className="text-white hover:text-primary">
-                    <Link href={href}>{title}</Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+        <nav className="">
+          <ul className="flex gap-5 justify-between text-sm">
+            {routes.map(({ title, href }) => (
+              <li
+                key={href}
+                className="text-white hover:text-primary transition-colors"
+              >
+                <Link href={href}>{title}</Link>
+              </li>
+            ))}
           </ul>
         </nav>
         {/* END NAV MENU */}
@@ -34,8 +34,12 @@ export function Header() {
         {/* END PROFILE BUTTON */}
 
         {/* MOBILE MENU ICON */}
-        <MenuIcon />
+        <Button variant="ghost" className="hover:text-primary">
+          <MenuIcon className="text-white hidden lg:block" />
+        </Button>
         {/* END MOBILE MENU ICON */}
+
+        {/* TODO: IMPLEMENT PROFILE ICON */}
       </div>
     </header>
   );

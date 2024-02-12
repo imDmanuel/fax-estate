@@ -14,7 +14,7 @@ const config = {
       center: true,
       padding: {
         DEFAULT: "calc(1rem + 3%)",
-        md: "calc(2rem + 5%)",
+        md: "calc(3rem + 5%)",
       },
       screens: {
         "2xl": "1400px",

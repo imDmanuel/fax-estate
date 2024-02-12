@@ -236,7 +236,7 @@ export function HeroSearchForm() {
       <div className="mt-16 shadow-2xl shadow-gray-400/45">
         <div className="bg-white inline-block px-6 py-2">Rentals</div>
         <Form {...form}>
-          <form className="grid grid-cols-[1fr_1fr_1fr_1fr_0.5fr] gap-3 items-center bg-white px-6 py-6">
+          <form className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr_0.5fr] gap-3 items-center bg-white px-6 py-6">
             {/* PROPERTY CATEGORY */}
             <FormField
               control={form.control}
@@ -264,10 +264,6 @@ export function HeroSearchForm() {
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -283,9 +279,6 @@ export function HeroSearchForm() {
                   <FormControl>
                     <Input placeholder="Property Size" {...field} />
                   </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -302,9 +295,6 @@ export function HeroSearchForm() {
                   <FormControl>
                     <Input placeholder="Property Lot Size" {...field} />
                   </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -335,9 +325,6 @@ export function HeroSearchForm() {
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -345,7 +332,7 @@ export function HeroSearchForm() {
             {/* END STATUS */}
 
             {/* SEARCH BUTTON */}
-            <Button className="mt-1">Search</Button>
+            <Button className="mt-8">Search</Button>
             {/* END SEARCH BUTTON */}
           </form>
         </Form>
