@@ -1,33 +1,40 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Logo from "@/assets/images/logo.png";
 import Link from "next/link";
 import { MenuIcon } from "lucide-react";
 import { routes } from "@/lib/routes";
 import { Button } from "./ui/button";
-import { lock, unlock, clearBodyLocks } from "tua-body-scroll-lock";
+import { usePathname } from "next/navigation";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const url = usePathname();
 
-  useEffect(() => {
-    return () => {
-      clearBodyLocks();
-    };
-  });
+  // useEffect(() => {
+  //   return () => {
+  //     clearAllBodyScrollLocks();
+  //   };
+  // });
 
-  useEffect(() => {
-    if (window.innerWidth >= 1024) {
-      return;
-    }
-    if (menuOpen) {
-      lock();
-    } else {
-      unlock();
-    }
-  }, [menuOpen]);
+  // useEffect(() => {
+  //   if (window.innerWidth >= 1024) {
+  //     return;
+  //   }
+  //   if (menuOpen) {
+  //     disableBodyScroll();
+  //   } else {
+  //     enableBodyScroll();
+  //   }
+  // }, [menuOpen]);
+
+  // // IF MENU IS OPEN, ON NAVIGATION, CLOSE IT..
+  // useEffect(() => {
+  //   setMenuOpen(false);
+  // }, [url]);
 
   return (
     <header className="bg-secondary">
@@ -37,6 +44,7 @@ export function Header() {
         {/* END LOGO */}
 
         <div
+          ref={menuRef}
           data-menu-open={menuOpen}
           className="translate-x-full data-[menu-open=true]:translate-x-0 transition-transform max-lg:absolute max-lg:z-20 max-lg:left-0 max-lg:right-0 max-lg:bottom-0 max-lg:top-16 max-lg:bg-secondary max-lg:pt-14"
         >
@@ -64,7 +72,16 @@ export function Header() {
         <Button
           variant="ghost"
           className="hover:text-primary"
-          onClick={() => setMenuOpen((prevState) => !prevState)}
+          onClick={() => {
+            setMenuOpen((prevState) => {
+              if (prevState === false) {
+                document.querySelector("body")?.classList.add("no-scroll");
+              } else {
+                document.querySelector("body")?.classList.remove("no-scroll");
+              }
+              return !prevState;
+            });
+          }}
         >
           {/* <MenuIcon className="text-white block lg:hidden" /> */}
           <div

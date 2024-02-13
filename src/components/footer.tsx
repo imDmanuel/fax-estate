@@ -58,12 +58,12 @@ export function Footer() {
 
       {/* FOOTER BOTTOM */}
       <div className="bg-secondary">
-        <div className="container flex items-center text-gray-400 py-5">
+        <div className="container flex sm:items-center flex-col sm:flex-row text-gray-400 py-5 sm:space-x-4 sm:justify-between">
           <div>
             &copy; {new Date().getFullYear()} FaxEstate. All Rights Reserved
           </div>
 
-          <div className="ml-auto">Privacy Policy | Terms of Service</div>
+          <div className="sm:ml-auto">Privacy Policy | Terms of Service</div>
         </div>
       </div>
       {/* END FOOTER BOTTOM */}

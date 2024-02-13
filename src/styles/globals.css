@@ -76,13 +76,17 @@
   p {
     /* @apply leading-relaxed; */
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
   body {
     @apply text-foreground bg-background overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .no-scroll {
+    @apply overflow-y-hidden;
   }
 }
