@@ -27,7 +27,7 @@ export default function Home() {
           {/* <div className="w-full"> */}
           {/* TAGLINE */}
           <div className="max-w-xl">
-            <h1 className="font-merriweather text-secondary">
+            <h1 className="font-merriweather text-secondary max-sm:text-4xl">
               Building houses that feel like home <br />- with us.
             </h1>
             <p className="pt-4 text-teal-blue">
