@@ -164,25 +164,62 @@ export default defineType({
       },
     }),
     defineField({
-      name: "propertyImage",
-      title: "Property image",
+      name: "featuredImage",
+      title: "Featured Image",
+      description: "Image that shows in the proprty card",
       type: "image",
       options: {
         hotspot: true,
+        modal: { type: "dialog" },
       },
+    }),
+    defineField({
+      name: "propertyImages",
+      title: "Property images",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: {
+            hotspot: true,
+            modal: {
+              type: "dialog",
+            },
+          },
+        },
+      ],
     }),
     defineField({
       name: "description",
       title: "Description",
       type: "text",
     }),
+    defineField({
+      name: "youtubeVideo",
+      title: "Youtube Video",
+      type: "object",
+      fields: [
+        { name: "video", type: "youtubeVideo" },
+        { name: "autoplay", type: "boolean", initialValue: false },
+        { name: "controls", type: "boolean", initialValue: true },
+      ],
+    }),
+    defineField({
+      title: "Location on Map",
+      name: "mapLocation",
+      type: "geopoint",
+      options: {
+        googleMapsInput: true,
+      },
+    }),
     {
       name: "criticReviews",
       title: "Critic Reviews",
-      type: "reference",
-      to: [
+      type: "array",
+      of: [
         {
-          type: "criticReviews",
+          type: "reference",
+          to: { type: "criticReview" },
         },
       ],
     },

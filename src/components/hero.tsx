@@ -14,14 +14,14 @@ export default function Hero({
 }) {
   return (
     <>
-      <div className="relative h-70 w-full overflow-hidden after:absolute after:top-0 after:left-0 after:right-0 after:bottom-0 after:bg-gray-800/50 text-white">
+      <div className="relative w-full overflow-hidden after:absolute after:top-0 after:left-0 after:right-0 after:bottom-0 after:bg-gray-800/50 text-white">
         <Image
           src={heroImage}
           alt=""
-          className="w-full h-[70svh] object-cover"
+          className="w-full h-[55svh] lg:h-[70svh] object-cover"
         />
         <div className="absolute z-10 top-0 left-0 right-0 bottom-0 flex items-center  justify-center flex-col">
-          <div className="text-4xl">{title}</div>
+          <div className="text-4xl font-merriweather">{title}</div>
 
           <div className="flex items-center space-x-1 text-base mt-2 uppercase">
             <LuHome className="text-lg" />

@@ -9,9 +9,11 @@ export interface Property {
   _createdAt: string;
   name: string;
   featured: boolean;
-  propertyImageUrl: string;
-  floorPlansUrl: string;
-  propertyImage: {
+  propertyImagesUrl?: string[];
+  featuredImage?: string;
+  featuredImageUrl?: string;
+  floorPlansUrl?: string;
+  propertyImages?: {
     asset: {
       _type: string;
       _ref: string;
@@ -38,6 +40,21 @@ export interface Property {
     cableTV: boolean;
     pool: boolean;
     fridge: boolean;
+  };
+  criticReviews: ICriticReview[];
+  mapLocation: {
+    lng: number;
+    _type: "geopoint";
+    lat: number;
+  };
+  youtubeVideo?: {
+    video: {
+      publishedAt: string;
+      description: string;
+      id: string;
+      thumbnails: string[];
+      title: string;
+    };
   };
   slug: {
     _type: string;
@@ -90,4 +107,27 @@ export interface Agent {
     current: string;
     _type: string; // Likely "slug"
   };
+}
+
+export interface ICriticReview {
+  _id: string;
+  _type: "criticReview";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+
+  name: string;
+  rating: number;
+  content: string;
+  date: string;
+
+  // Optional reviewer image
+  reviewerImage?: {
+    _type: "image";
+    asset: {
+      _ref: string;
+      _type: "reference";
+    };
+  };
+  reviewerImageUrl?: string | null;
 }

@@ -9,6 +9,9 @@ import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import { apiVersion, dataset, projectId } from "./sanity/env";
 import { schema } from "./sanity/schema";
+import { googleMapsInput } from "@sanity/google-maps-input";
+// import {} from "sanity-plugin-leaflet-input";
+import { youtubeInput } from "sanity-plugin-youtube-input";
 
 export default defineConfig({
   basePath: "/studio",
@@ -22,5 +25,9 @@ export default defineConfig({
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
     unsplashImageAsset(),
+    googleMapsInput({
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "",
+    }),
+    youtubeInput({ apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "" }),
   ],
 });

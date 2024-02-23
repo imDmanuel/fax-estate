@@ -19,14 +19,24 @@ import { groq } from "next-sanity";
 import { Agent, Property } from "@/lib/query-types";
 import Image from "next/image";
 import Hero from "@/components/hero";
+import PropertyGallery from "@/components/property-gallery";
+import PropertyMap from "@/components/property-map";
+import PropertyVideo from "@/components/property-video";
+import CriticsReviews from "@/components/critics-reviews";
 
 const fetchPropertyDetailsQuery = groq`*[_type=="property" && slug.current == $slug][0]{
   ...,
-  "propertyImageUrl": propertyImage.asset->url,
+  youtubeVideo,
+  "propertyImagesUrl": propertyImages[].asset->url,
   "floorPlansUrl": floorPlans.asset->url,
+  "featuredImageUrl": featuredImage.asset->url,
   agent->{
     ...,
     "imageUrl": image.asset->url
+  },
+  "criticReviews": criticReviews[]->{
+    ...,
+    "reviewerImageUrl": reviewerImage.asset->url
   }
 }`;
 
@@ -62,13 +72,18 @@ export default async function PropertyListings({
         <div className="container">
           {/*  */}
           {/* TODO: IMPLEMENT IMAGE SLIDER */}
+          {propertyDetails.propertyImagesUrl && (
+            <PropertyGallery
+              propertyImagesUrl={propertyDetails.propertyImagesUrl}
+            />
+          )}
           {/*  */}
         </div>
       </section>
       {/* IMAGE SLIDER */}
 
       <section>
-        <div className="container flex flex-col md:flex-row gap-6">
+        <div className="container flex flex-col lg:flex-row gap-6 mt-10">
           {/* LEFT SECTION */}
           <div>
             {/* PROPERTY DETAILS */}
@@ -338,8 +353,9 @@ export default async function PropertyListings({
                 Floor Plans
               </div>
 
+              {/* TODO: REPLACE WITH PLACEHOLDER IMAGE */}
               <Image
-                src={propertyDetails.floorPlansUrl}
+                src={propertyDetails.floorPlansUrl || ""}
                 alt=""
                 width="700"
                 height="700"
@@ -353,15 +369,21 @@ export default async function PropertyListings({
               <div className="font-bold font-merriweather text-2xl mb-4">
                 Map Location
               </div>
+
+              {/* <PropertyMap position={propertyDetails.mapLocation} /> */}
             </div>
             {/* END MAP LOCATION */}
 
             {/* PROPERTY VIDEO */}
-            <div className="bg-white p-6 mt-6">
-              <div className="font-bold font-merriweather text-2xl mb-4">
-                Property video
+            {propertyDetails.youtubeVideo && (
+              <div className="bg-white p-6 mt-6">
+                <div className="font-bold font-merriweather text-2xl mb-4">
+                  Property video
+                </div>
+
+                <PropertyVideo video={propertyDetails.youtubeVideo} />
               </div>
-            </div>
+            )}
             {/* END PROPERTY VIDEO */}
 
             {/* CRITICS REVIEWS */}
@@ -369,6 +391,8 @@ export default async function PropertyListings({
               <div className="font-bold font-merriweather text-2xl mb-4">
                 Critics review
               </div>
+
+              <CriticsReviews reviews={propertyDetails.criticReviews} />
             </div>
             {/* END CRITICS REVIEWS */}
 

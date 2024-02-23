@@ -13,6 +13,9 @@ import {
   disableBodyScroll,
   enableBodyScroll,
 } from "body-scroll-lock";
+import { LuUser2 } from "react-icons/lu";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import Avatar from "@/assets/images/user-image.jpg";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -57,7 +60,7 @@ export function Header() {
           max-lg:pt-10 overflow-y-auto"
         >
           {/* NAV MENU */}
-          <nav className="">
+          <nav className="flex items-center">
             <ul className="flex flex-col lg:flex-row gap-5 justify-between text-sm">
               {routes.map(({ title, href }) => (
                 <li
@@ -74,23 +77,82 @@ export function Header() {
           {/* END NAV MENU */}
         </div>
 
-        {/* PROFILE BUTTON */}
-        {/* TODO: IMPLEMENT THIS FUNCTION */}
-        {/* END PROFILE BUTTON */}
+        <div className="flex items-center">
+          {/* PROFILE ICON */}
+          {/* TODO: IMPLEMENT THIS FUNCTION */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="ghost"
+                className="flex items-center text-white space-x-2 px-1"
+              >
+                <LuUser2 className="text-2xl" />
+                <div>Profile</div>
+              </Button>
+            </PopoverTrigger>
 
-        {/* MOBILE MENU ICON */}
-        <Button
-          variant="ghost"
-          className="hover:text-primary"
-          onClick={() => {
-            setMenuOpen((prevState) => !prevState);
-          }}
-        >
-          {/* w-6 h-0.5 bg-white after:block after:w-6 after:h-0.5 after:bg-white after:translate-y-1.5 before:block before:w-4 before:h-0.5 before:bg-white before:-translate-y-2.5 data-[menu-open=true]:before:-translate-y-1 data-[menu-open=true]:after:-translate-y-2 data-[menu-open=true]:h-0 data-[menu-open=true]:before:w-8 data-[menu-open=true]:before:rotate-45 data-[menu-open=true]:after:-rotate-45 */}
-          {/* <MenuIcon className="text-white block lg:hidden" /> */}
-          <div data-menu-open={menuOpen} className="menu-icon"></div>
-        </Button>
-        {/* END MOBILE MENU ICON */}
+            <PopoverContent>
+              <div>
+                {/* AVATAR AND NAME */}
+                <div className="flex items-center space-x-2">
+                  <Image
+                    src={Avatar}
+                    alt=""
+                    className="size-9 rounded-full mb-3"
+                  />
+                  <div className="font-medium font-merriweather text-sm">
+                    Person Name
+                  </div>
+                </div>
+                {/* END AVATAR AND NAME  */}
+
+                {/* MENU ITEMS */}
+                <div className="border-t pt-3 text-sm flex flex-col">
+                  <Link
+                    href="#"
+                    className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
+                  >
+                    Edit Profile
+                  </Link>
+                  <Link
+                    href="#"
+                    className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
+                  >
+                    Favourites
+                  </Link>
+                  <Link
+                    href="#"
+                    className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
+                  >
+                    Bids & Transaction History
+                  </Link>
+                  <Link
+                    href="#"
+                    className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
+                  >
+                    Logout
+                  </Link>
+                </div>
+                {/* END MENU ITEMS */}
+              </div>
+            </PopoverContent>
+          </Popover>
+          {/* END PROFILE ICON */}
+
+          {/* MOBILE MENU ICON */}
+          <Button
+            variant="ghost"
+            className="hover:text-primary lg:hidden px-1"
+            onClick={() => {
+              setMenuOpen((prevState) => !prevState);
+            }}
+          >
+            {/* w-6 h-0.5 bg-white after:block after:w-6 after:h-0.5 after:bg-white after:translate-y-1.5 before:block before:w-4 before:h-0.5 before:bg-white before:-translate-y-2.5 data-[menu-open=true]:before:-translate-y-1 data-[menu-open=true]:after:-translate-y-2 data-[menu-open=true]:h-0 data-[menu-open=true]:before:w-8 data-[menu-open=true]:before:rotate-45 data-[menu-open=true]:after:-rotate-45 */}
+            {/* <MenuIcon className="text-white block lg:hidden" /> */}
+            <div data-menu-open={menuOpen} className="menu-icon"></div>
+          </Button>
+          {/* END MOBILE MENU ICON */}
+        </div>
 
         {/* TODO: IMPLEMENT PROFILE ICON */}
       </div>

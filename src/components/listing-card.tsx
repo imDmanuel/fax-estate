@@ -20,7 +20,7 @@ export function ListingCard({ listing }: { listing: Property }) {
       <div className="relative">
         {/* IMAGE */}
         <Image
-          src={listing.propertyImageUrl}
+          src={listing.featuredImageUrl ? listing.featuredImageUrl : ""}
           alt=""
           width={600}
           height={400}

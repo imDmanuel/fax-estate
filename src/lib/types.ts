@@ -37,10 +37,10 @@ export interface PropertyListing {
     agent?: string;
   };
   floorPlans?: string;
-  reviews: CriticReview[];
+  reviews: ICriticReview[];
 }
 
-export interface CriticReview {
+export interface ICriticReview {
   _id: string;
   reviewerImage: string;
   name: string;

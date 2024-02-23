@@ -13,7 +13,7 @@ const config = {
     container: {
       center: true,
       padding: {
-        DEFAULT: "calc(1rem + 3%)",
+        DEFAULT: "calc(0.5rem + 3%)",
         md: "calc(3rem + 5%)",
       },
       screens: {
