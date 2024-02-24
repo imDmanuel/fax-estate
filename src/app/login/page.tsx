@@ -18,19 +18,39 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import registerImage from "@/assets/images/apartment-building.jpg";
 import Link from "next/link";
-
-const formSchema = z.object({
-  username: z.string({ required_error: "Username is required!" }),
-  password: z
-    .string({ required_error: "Password is required!" })
-    .min(6, "Please enter at least six (6) characters!"),
-});
+import { login } from "@/lib/auth";
+import { LoginForm, loginFormSchema } from "@/lib/formSchemas";
+import { useRouter } from "next/navigation";
+import { revalidatePath } from "next/cache";
+import { toast } from "@/components/ui/use-toast";
+import { useUser } from "@/components/session-context";
 
 export default function Register() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const { setUser } = useUser();
+  const router = useRouter();
+  const form = useForm<LoginForm>({
+    resolver: zodResolver(loginFormSchema),
     defaultValues: {},
   });
+
+  async function onSubmit(values: LoginForm) {
+    const loggedIn = await login(values);
+
+    if (loggedIn.success && loggedIn.user) {
+      toast({
+        description: "Login successful",
+        duration: 300,
+      });
+      setUser(loggedIn.user);
+      router.replace("/property-listings");
+    } else {
+      toast({
+        title: "Login Error",
+        description: loggedIn.message || "Unable to login, please try again..",
+        variant: "destructive",
+      });
+    }
+  }
 
   return (
     <main>
@@ -42,19 +62,22 @@ export default function Register() {
               <Form {...form}>
                 <div className="bg-white px-8 py-9">
                   <div className="font-bold text-2xl mb-5">Login</div>
-                  <form className="space-y-2">
+                  <form
+                    className="space-y-2"
+                    onSubmit={form.handleSubmit(onSubmit)}
+                  >
                     {/* USERNAME */}
                     <FormField
                       control={form.control}
-                      name="username"
+                      name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Account</FormLabel>
+                          <FormLabel>Email</FormLabel>
                           <FormControl>
                             <Input
-                              type="text"
+                              type="email"
                               className="bg-transparent text-gray-300 placeholder:text-gray-400"
-                              placeholder="User Name"
+                              placeholder="Email"
                               {...field}
                             />
                           </FormControl>

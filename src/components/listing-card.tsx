@@ -11,16 +11,23 @@ import { HiArrowRight } from "react-icons/hi2";
 import { StarRating } from "./star-rating";
 import { IoBedOutline } from "react-icons/io5";
 import Image from "next/image";
-import { PropertyListing } from "@/lib/types";
 import { Property } from "@/lib/query-types";
 
 export function ListingCard({ listing }: { listing: Property }) {
+  let featuredImageUrl;
+  if (listing.featuredImageUrl) {
+    featuredImageUrl = listing.featuredImageUrl;
+  } else if (listing.propertyImagesUrl && listing.propertyImagesUrl[0]) {
+    featuredImageUrl = listing.propertyImagesUrl[0];
+  } else {
+    featuredImageUrl = "";
+  }
   return (
     <div key={listing._id}>
       <div className="relative">
         {/* IMAGE */}
         <Image
-          src={listing.featuredImageUrl ? listing.featuredImageUrl : ""}
+          src={featuredImageUrl}
           alt=""
           width={600}
           height={400}

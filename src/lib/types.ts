@@ -1,4 +1,6 @@
+import { Prisma } from "@prisma/client";
 import { Agent } from "./query-types";
+import { getUser } from "./utils";
 
 export interface PropertyListing {
   _id: string;
@@ -79,4 +81,9 @@ export type PricingPlan = {
   description: string;
   price: string;
   features: string[];
+};
+
+export type SessionData = {
+  user: Awaited<Prisma.UserSelect>;
+  expires: string;
 };

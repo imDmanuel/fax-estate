@@ -10,7 +10,8 @@ export async function AllPropertyListings() {
   >(`*[_type == 'property'] | order(_updatedAt) {
   ...,
   "floorPlanUrl": floorPlans.asset->url,
-  "propertyImageUrl": propertyImage.asset-> url
+  "propertyImageUrl": propertyImage.asset-> url,
+  "featuredImageUrl": featuredImage.asset->url,
 }[0...20]
 `);
 

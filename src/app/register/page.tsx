@@ -17,32 +17,37 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import registerImage from "@/assets/images/apartment-building.jpg";
 import Link from "next/link";
+import { RegisterForm, registerFormSchema } from "@/lib/formSchemas";
+import { register } from "@/lib/auth";
+import { useToast } from "@/components/ui/use-toast";
+import { redirect } from "next/navigation";
 
-const formSchema = z
-  .object({
-    username: z.string({ required_error: "Username is required!" }),
-    email: z
-      .string({ required_error: "Email is required!" })
-      .email("Please enter a valid email!"),
-    password: z
-      .string({ required_error: "Password is required!" })
-      .min(6, "Please enter at least six (6) characters!"),
-    confirm: z.string(),
-  })
-  .superRefine(({ password, confirm }, ctx) => {
-    if (confirm !== password) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Passwords do not match",
-        path: ["confirm"],
-      });
-    }
-  });
 export default function Register() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const { toast } = useToast();
+  const form = useForm<RegisterForm>({
+    resolver: zodResolver(registerFormSchema),
     defaultValues: {},
   });
+
+  async function onSubmit(values: RegisterForm) {
+    const result = await register(values);
+
+    if (result.success) {
+      toast({
+        variant: "default",
+        title: "Success!",
+        description: "User account successfully created! please login..",
+      });
+
+      redirect("/login");
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Error!",
+        description: result.message,
+      });
+    }
+  }
 
   return (
     <main>
@@ -54,14 +59,17 @@ export default function Register() {
               <Form {...form}>
                 <div className="bg-white px-8 py-9">
                   <div className="font-bold text-2xl mb-5">Registration</div>
-                  <form className="space-y-2">
+                  <form
+                    className="space-y-2"
+                    onSubmit={form.handleSubmit(onSubmit)}
+                  >
                     {/* USERNAME */}
                     <FormField
                       control={form.control}
-                      name="username"
+                      name="fullName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Username</FormLabel>
+                          <FormLabel>Full Name</FormLabel>
                           <FormControl>
                             <Input
                               type="text"
@@ -126,6 +134,7 @@ export default function Register() {
                           <FormLabel>Confirm password</FormLabel>
                           <FormControl>
                             <Input
+                              type="password"
                               className="bg-transparent text-gray-300 placeholder:text-gray-400"
                               placeholder="Confirm password"
                               {...field}

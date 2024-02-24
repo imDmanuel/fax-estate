@@ -20,6 +20,6 @@ model User {
   email      String   @unique
   password   String
   favourites String[]
-  name       String?
-  image      String
+  fullName   String?
+  image      String?
 }

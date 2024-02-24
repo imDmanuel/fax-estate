@@ -4,7 +4,6 @@ import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import Logo from "@/assets/images/logo.png";
 import Link from "next/link";
-import { MenuIcon } from "lucide-react";
 import { routes } from "@/lib/routes";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
@@ -16,10 +15,15 @@ import {
 import { LuUser2 } from "react-icons/lu";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import Avatar from "@/assets/images/user-image.jpg";
+import { SessionData } from "@/lib/types";
+import { useUser } from "./session-context";
+import { logout } from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const { user } = useUser();
   const url = usePathname();
 
   useEffect(() => {
@@ -92,49 +96,7 @@ export function Header() {
             </PopoverTrigger>
 
             <PopoverContent>
-              <div>
-                {/* AVATAR AND NAME */}
-                <div className="flex items-center space-x-2">
-                  <Image
-                    src={Avatar}
-                    alt=""
-                    className="size-9 rounded-full mb-3"
-                  />
-                  <div className="font-medium font-merriweather text-sm">
-                    Person Name
-                  </div>
-                </div>
-                {/* END AVATAR AND NAME  */}
-
-                {/* MENU ITEMS */}
-                <div className="border-t pt-3 text-sm flex flex-col">
-                  <Link
-                    href="#"
-                    className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
-                  >
-                    Edit Profile
-                  </Link>
-                  <Link
-                    href="#"
-                    className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
-                  >
-                    Favourites
-                  </Link>
-                  <Link
-                    href="#"
-                    className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
-                  >
-                    Bids & Transaction History
-                  </Link>
-                  <Link
-                    href="#"
-                    className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
-                  >
-                    Logout
-                  </Link>
-                </div>
-                {/* END MENU ITEMS */}
-              </div>
+              {user ? <LoggedInProfileMenu /> : <LoginProfileMenu />}
             </PopoverContent>
           </Popover>
           {/* END PROFILE ICON */}
@@ -157,5 +119,72 @@ export function Header() {
         {/* TODO: IMPLEMENT PROFILE ICON */}
       </div>
     </header>
+  );
+}
+
+function LoggedInProfileMenu() {
+  const { setUser } = useUser();
+
+  return (
+    <div>
+      {/* AVATAR AND NAME */}
+      <div className="flex items-center space-x-2">
+        <Image src={Avatar} alt="" className="size-9 rounded-full mb-3" />
+        <div className="font-medium font-merriweather text-sm">Person Name</div>
+      </div>
+      {/* END AVATAR AND NAME  */}
+
+      {/* MENU ITEMS */}
+      <div className="border-t pt-3 text-sm flex flex-col">
+        <Link
+          href="#"
+          className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
+        >
+          Edit Profile
+        </Link>
+        <Link
+          href="#"
+          className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
+        >
+          Favourites
+        </Link>
+        <Link
+          href="#"
+          className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
+        >
+          Bids & Transaction History
+        </Link>
+        <Link
+          onClick={async () => {
+            await logout();
+            setUser(null);
+          }}
+          href="#"
+          className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
+        >
+          Logout
+        </Link>
+      </div>
+      {/* END MENU ITEMS */}
+    </div>
+  );
+}
+
+function LoginProfileMenu() {
+  return (
+    <div className="text-sm flex flex-col">
+      <Link
+        href="/login"
+        className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
+      >
+        Login
+      </Link>
+      <Link
+        href="/register"
+        className="py-2 px-3 transition-colors hover:bg-secondary hover:text-white"
+      >
+        Register
+      </Link>
+    </div>
   );
 }
